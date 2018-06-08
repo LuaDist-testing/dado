@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Dado: Facilidades sobre a LuaSQL</title>
-    <link rel="stylesheet" href="https://keplerproject.github.io/luasql/doc/us/doc.css" type="text/css"/>
+    <link rel="stylesheet" href="https://keplerproject.github.io/luasql/doc.css" type="text/css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
@@ -80,7 +80,7 @@ Entretanto &eacute; f&aacute;cil definir atributos que n&atilde;o sejam relacion
 <h2><a name="status"></a>Status</h2>
 
 <p>
-A vers&atilde;o atual &eacute; a 1.8.
+A vers&atilde;o atual &eacute; a 1.8.2.
 Ela foi desenvolvida para Lua 5.1 e Lua 5.2.
 Esta versão deve funcionar também em Lua 5.3, embora apenas os módulos <code>dado.sql</code> e <code>table.extra</code> tenham sido testados (os outros módulos dependem da LuaSQL, que ainda não estava disponível para esta versão da linguagem no lan&ccedil;amento desta biblioteca).
 </p>
@@ -114,6 +114,12 @@ A <a href="../luadoc/index.html">API</a> &eacute; documentada atrav&eacute;s do 
 <h2><a name="history"></a>Hist&oacute;rico</h2>
 
 <ul>
+    <li>[4/abr/2017] Lan&ccedil;amento da vers&atilde;o 1.8.2<ul>
+        <li>Reimplementa&ccedil;&atilde;o da fun&ccedil;&atilde;o <a href="luadoc/modules/table.extra.html#fullconcat"><code>table.extra.fullconcat</code></a>: ela assume que a tabela recebida tem chaves e valores apropriados (contribui&ccedil;&atilde;o de Fran&ccedil;ois Perrad)</li>
+        <li>Adapta&ccedil;&atilde;o da implementa&ccedil;&atilde;o da fun&ccedil;&atilde;o <a href="luadoc/modules/table.extra.html#twostr"><code>table.extra.twostr</code></a> (contribuição de Fran&ccedil;ois Perrad)</li>
+    </ul></li>
+    <li>[16/mar/2017] Lan&ccedil;amento da vers&atilde;o 1.8.1<br/>
+        Melhoria na fun&ccedil;&atilde;o <a href="luadoc/modules/table.extra.html#fullconcat"><code>table.extra.fullconcat</code></a>: força a conversão dos elementos da tabela em strings por default (contribuição de Fran&ccedil;ois Perrad)</li>
     <li>[22/feb/2017] Lan&ccedil;amento da vers&atilde;o 1.8<br/>
         Acr&eacute;scimo da fun&ccedil;&atilde;o <a href="luadoc/modules/dado.sql.html#quotedconcat"><code>sql.quotedconcat</code></a></li>
     <li>[4/dez/2015] Lan&ccedil;amento da vers&atilde;o 1.7.1<br/>
@@ -191,7 +197,7 @@ Coment&aacute;rios s&atilde;o bem vindos!</p>
 <div id="about">
 	<p><a href="http://validator.w3.org/check?uri=referer">
     <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
-	<p><small>$Id: index.html,v 1.23 2017/02/22 18:49:38 tomas Exp $</small></p>
+	<p><small>$Id: index.html,v 1.26 2017/04/04 17:11:58 tomas Exp $</small></p>
 </div> <!-- id="about" -->
 
 </div> <!-- id="container" -->

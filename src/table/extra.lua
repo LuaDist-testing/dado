@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name table.extra
--- @release $Id: extra.lua,v 1.16 2017/02/22 18:37:20 tomas Exp $
+-- @release $Id: extra.lua,v 1.18 2017/04/04 17:11:58 tomas Exp $
 ---------------------------------------------------------------------
 
 local assert, pairs, type = assert, pairs, type
@@ -23,8 +23,8 @@ local strformat = require"string".format
 -- @param tab Table of field=value pairs.
 -- @param kvsep String with key-value separator (default = '=').
 -- @param pairssep String with pairs separator (default = ',').
--- @param kfilter Function to filter the keys (optional).
--- @param vfilter Function to filter the values (optional).
+-- @param kfilter Function (should return a string) to filter the keys (optional).
+-- @param vfilter Function (should return a string) to filter the values (optional).
 -- @return String with field=value pairs separated by ','.
 ---------------------------------------------------------------------
 local function fullconcat (tab, kvsep, pairssep, kfilter, vfilter)
@@ -51,8 +51,8 @@ end
 -- @param tab Table of field=value pairs.
 -- @param kvsep String with key-value separator (default = '=').
 -- @param pairssep String with pairs separator (default = ',').
--- @param kfilter Function to filter the keys (optional).
--- @param vfilter Function to filter the values (optional).
+-- @param kfilter Function (should return a string) to filter the keys (optional).
+-- @param vfilter Function (should return a string) to filter the values (optional).
 -- @return String with field=value pairs separated by ','.
 ---------------------------------------------------------------------
 local function pfullconcat (tab, kvsep, pairssep, kfilter, vfilter)
@@ -96,29 +96,22 @@ end
 -- @param tab Table of key=value pairs.
 -- @param ksep String with key separator (default = ',').
 -- @param vsep String with value separator (default = ',').
--- @param kfilter Function to filter the keys (optional).
--- @param vfilter Function to filter the values (optional).
+-- @param kfilter Function (should return a string) to filter the keys (default = tostring).
+-- @param vfilter Function (should return a string) to filter the values (default = tostring).
 -- @return Two strings; the first with a list of the fields and the
 --	second with a list of the values.
 ---------------------------------------------------------------------
 local function twostr (tab, ksep, vsep, kfilter, vfilter)
 	ksep  = ksep or ','
 	vsep  = vsep or ','
+	kfilter = kfilter or tostring
+	vfilter = vfilter or tostring
 	local k, v = {}, {}
 	local i = 0
 	for key, val in pairs (tab) do
 		i = i+1
-		k[i] = kfilter and kfilter(key) or strformat("%s", key)
-		if kfilter then
-			k[i] = kfilter(key)
-		else
-			k[i] = strformat("%s", key)
-		end
-		if vfilter then
-			v[i] = vfilter(val)
-		else
-			v[i] = strformat("%s", val)
-		end
+		k[i] = kfilter(key)
+		v[i] = vfilter(val)
 	end
 	return tconcat (k, ksep), tconcat (v, vsep)
 end
@@ -127,7 +120,7 @@ end
 return {
 	_COPYRIGHT = "Copyright (C) 2008-2017 PUC-Rio",
 	_DESCRIPTION = "Table Extra contains some functions used to manipulate tables by other Dado modules",
-	_VERSION = "Table Extra 1.8.0",
+	_VERSION = "Table Extra 1.8.2",
 
 	fullconcat = fullconcat,
 	pfullconcat = pfullconcat,
