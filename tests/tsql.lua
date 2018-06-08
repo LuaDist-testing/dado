@@ -24,10 +24,12 @@ assert (sql.quote([[(select col from tab where cond)]]) == [['(select col from t
 assert (sql.quote([[((select col from tab where cond))]]) == [[((select col from tab where cond))]])
 assert (sql.quote([[(a comment inside parens should be quoted)]]) == [['(a comment inside parens should be quoted)']])
 assert (sql.quote([[((a comment inside double-balanced-parens should NOT be quoted))]]) == [[((a comment inside double-balanced-parens should NOT be quoted))]])
-assert (sql.quote(1) == 1)
+assert (sql.quote(1) == "((1))")
+assert (sql.quote(1) == sql.quote(sql.quote(1)))
 assert (sql.quote("(1)") == "'(1)'")
 assert (sql.quote("((1))") == "((1))")
-assert (sql.quote(1.5) == 1.5)
+assert (sql.quote(1.5) == "((1.5))")
+assert (sql.quote(1.5) == sql.quote(sql.quote(1.5)))
 assert (sql.quote("(1.5)") == "'(1.5)'")
 assert (sql.quote("((1.5))") == "((1.5))")
 assert (sql.quote("(1,2)") == "'(1,2)'")
@@ -50,10 +52,10 @@ assert (sql.select("a", "t", "w", "e") == "select a from t where w e")
 io.write"."
 
 -- insert
-assert (sql.insert("t", { a = 1 }) == "insert into t (a) values (1)")
+assert (sql.insert("t", { a = 1 }) == "insert into t (a) values (((1)))")
 local stmt = sql.insert("t", { a = 1, b = "qw" })
-assert (stmt == "insert into t (a,b) values (1,'qw')" or
-        stmt == "insert into t (b,a) values ('qw',1)")
+assert (stmt == "insert into t (a,b) values (((1)),'qw')" or
+        stmt == "insert into t (b,a) values ('qw',((1)))")
 local stmt = sql.insert("t", { a = false, b = "qw" })
 assert (stmt == "insert into t (a,b) values (((false)),'qw')" or
         stmt == "insert into t (b,a) values ('qw',((false)))")
@@ -63,10 +65,10 @@ assert (stmt == "insert into t (a,b) values (((true)),'qw')" or
 io.write"."
 
 -- update
-assert (sql.update("t", { a = 1 }) == "update t set a=1")
+assert (sql.update("t", { a = 1 }) == "update t set a=((1))")
 assert (sql.update("t", { a = true }) == "update t set a=((true))")
 local stmt = sql.update("t", { a = 1, b = "qw" })
-assert (stmt == "update t set a=1,b='qw'")
+assert (stmt == "update t set a=((1)),b='qw'")
 io.write"."
 
 -- delete
@@ -75,16 +77,16 @@ assert (sql.delete("t", "a=1") == "delete from t where a=1")
 io.write"."
 
 -- simple AND expression
-assert (sql.AND { a = 1, b = 2 } == "a=1 AND b=2")
+assert (sql.AND { a = 1, b = 2 } == "a=((1)) AND b=((2))")
 local cond = sql.AND { a = 1, b = true }
-assert (cond == "a=1 AND b=((true))" or cond == "b=((true)) AND a = 1")
+assert (cond == "a=((1)) AND b=((true))" or cond == "b=((true)) AND a=((1))")
 local sub = sql.subselect("id", "usuario", "nome ilike "..sql.quote"tomas%")
 assert (sql.AND { id = sub } == [[id=((select id from usuario where nome ilike 'tomas%'))]], sql.AND { id = sub })
 io.write"."
 
 -- quotedconcat
 assert (sql.quotedconcat{} == '')
-assert (sql.quotedconcat{1,2} == "1,2")
+assert (sql.quotedconcat{1,2} == "((1)),((2))")
 assert (sql.quotedconcat{ "INF", "ELE", "COM", } == "'INF','ELE','COM'")
 assert (sql.quotedconcat{ "ROBERTO D'ÁVILA", "JOSÉ D'ABREU", } == "'ROBERTO D''ÁVILA','JOSÉ D''ABREU'")
 io.write"."

@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name table.extra
--- @release $Id: extra.lua,v 1.18 2017/04/04 17:11:58 tomas Exp $
+-- @release $Id: extra.lua,v 1.19 2017/04/05 19:14:08 tomas Exp $
 ---------------------------------------------------------------------
 
 local assert, pairs, type = assert, pairs, type
@@ -93,6 +93,8 @@ end
 
 ---------------------------------------------------------------------
 -- Builds two lists, of keys and of values.
+-- @class function
+-- @name twostr
 -- @param tab Table of key=value pairs.
 -- @param ksep String with key separator (default = ',').
 -- @param vsep String with value separator (default = ',').
@@ -120,7 +122,7 @@ end
 return {
 	_COPYRIGHT = "Copyright (C) 2008-2017 PUC-Rio",
 	_DESCRIPTION = "Table Extra contains some functions used to manipulate tables by other Dado modules",
-	_VERSION = "Table Extra 1.8.2",
+	_VERSION = "Table Extra 1.8.3",
 
 	fullconcat = fullconcat,
 	pfullconcat = pfullconcat,

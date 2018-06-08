@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name dado.sql
--- @release $Id: sql.lua,v 1.38 2017/04/04 17:11:58 tomas Exp $
+-- @release $Id: sql.lua,v 1.39 2017/04/05 19:14:08 tomas Exp $
 ---------------------------------------------------------------------
 
 local string = require"string"
@@ -34,14 +34,12 @@ end
 -- in this case it won't be quoted.
 -- @class function
 -- @name quote
--- @param s String or number (numbers aren't quoted).
--- @return String with prepared value.
+-- @param s String or number or boolean.
+-- @return String with quoted value.
 ---------------------------------------------------------------------
 local function quote (s)
 	local ts = type(s)
-	if ts == "number" then
-		return s
-	elseif ts == "boolean" then
+	if ts == "number" or ts == "boolean" then
 		return strformat ("((%s))", s)
 
 	elseif ts == "string"
@@ -191,7 +189,7 @@ end
 return {
 	_COPYRIGHT = "Copyright (C) 2008-2017 PUC-Rio",
 	_DESCRIPTION = "SQL is a collection of functions to create SQL statements",
-	_VERSION = "Dado SQL 1.8.2",
+	_VERSION = "Dado SQL 1.8.3",
 
 	quote = quote,
 	quotedconcat = quotedconcat,
