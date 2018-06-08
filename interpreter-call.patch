@@ -1,0 +1,19 @@
+--- dado-1.0/Makefile.old	2008-04-24 19:30:55.000000000 -0300
++++ dado-1.0/Makefile	2008-04-24 19:30:45.000000000 -0300
+@@ -3,6 +3,7 @@
+ PKG= dado
+ V= 1.0
+ DIST_DIR= $(PKG)-$V
++LUA= /usr/local/bin/lua5.1
+ LUA_DIR= /usr/local/share/lua/5.1
+ DADO_DIR= $(LUA_DIR)/dado
+ STRING_EXTRA_DIR= $(LUA_DIR)/string
+@@ -50,7 +51,7 @@
+ 	cp $(DADO_SRCS) $(DADO_DIR)
+ 
+ installprod: installsrc installrmck
+-	$(BIN_DIR)/rm_check.lua $(STRING_EXTRA_DIR)/* $(TABLE_EXTRA_DIR)/* $(DADO_DIR)/*
++	$(LUA) $(BIN_DIR)/rm_check.lua $(STRING_EXTRA_DIR)/* $(TABLE_EXTRA_DIR)/* $(DADO_DIR)/*
+ 
+ installrmck: $(RMCK)
+ 	mkdir -p $(BIN_DIR)
