@@ -2,7 +2,7 @@
 
 package = "dado"
 
-version = "1.2.0-0"
+version = "1.3.0-1"
 
 description = {
    summary = "Database Facilities for LuaSQL",
@@ -11,7 +11,9 @@ description = {
       connection objects. Its main goals are: better error messages, iterators
       to access the result set and more homogeneity in some commonly used
       database operations.
-   ]]
+   ]],
+   license = "MIT/X11",
+   homepage = "http://www.ccpa.puc-rio.br/software/dado",
 }
 
 dependencies = {
@@ -22,13 +24,13 @@ dependencies = {
 
 -- LuaDist source
 source = {
-  tag = "1.2.0-0",
+  tag = "1.3.0-1",
   url = "git://github.com/LuaDist-testing/dado.git"
 }
 -- Original source
 -- source = {
---    url = "http://luaforge.net/frs/download.php/4588/dado-1.2.0.tar.gz",
---    md5 = "c32df33c8a4b6d364d72f084f3a144e4",
+--    url = "http://www.ccpa.puc-rio.br/software/dado/download/dado-1.3.0.tar.gz",
+--    md5 = "7aa9405fe54112936803b5180b4dbe5f",
 -- }
 
 build = {
@@ -39,5 +41,8 @@ build = {
 		["dado.object"] = "src/dado/object.lua",
 		["string.extra"] = "src/string/extra.lua",
 		["table.extra"] = "src/table/extra.lua",
+	},
+	copy_directories = {
+		"tests",
 	},
 }
