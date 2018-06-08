@@ -3,7 +3,7 @@
 local dbobj = require"dado.object"
 local dado = require"dado"
 local dbname = arg[1] or "teste"
-local user = arg[2] or "postgres"
+local user = arg[2]
 local pass = arg[3]
 local driver = arg[4]
 

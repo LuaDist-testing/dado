@@ -2,7 +2,7 @@
 
 local dado = require"dado"
 local dbname = arg[1] or "teste"
-local user = arg[2] or "postgres"
+local user = arg[2]
 local pass = arg[3]
 local driver = arg[4]
 
@@ -62,7 +62,7 @@ for campo1, campo2 in select_iter do
 	assert (campo1 == dados[contador].campo1)
 	assert (campo2 == dados[contador].campo2)
 end
-assert(cur:close())
+assert(cur:close() == false)
 
 -- Teste de valores especiais para datas
 local n = #dados + 1
@@ -84,5 +84,22 @@ end
 assert (log_table[1] == nil)
 assert (db:select ("*", "tabela")())
 assert (log_table[1] == "select * from tabela", ">>"..tostring(log_table[1]))
+
+-- Wrapping an already open connection
+driver = driver or "postgres"
+local env = luasql[driver]()
+local conn = env:connect(dbname, user, pass)
+local new_db = dado.wrap_connection(conn)
+
+assert (type(new_db) == "table", "Nao consegui criar a conexao")
+assert (type(new_db.conn) == "userdata")
+assert (string.find (tostring(new_db.conn), "connection"))
+local mt = getmetatable(new_db)
+assert (type(mt) == "table")
+assert (type(mt.__index) == "table")
+assert (mt.__index == dado)
+
+new_db:close()
+assert (new_db.conn == nil)
 
 print"Ok!"
