@@ -80,7 +80,7 @@ Entretanto &eacute; f&aacute;cil definir atributos que n&atilde;o sejam relacion
 <h2><a name="status"></a>Status</h2>
 
 <p>
-A vers&atilde;o atual &eacute; a 1.7.
+A vers&atilde;o atual &eacute; a 1.7.1.
 Ela foi desenvolvida para Lua 5.1 e Lua 5.2.
 Esta versão deve funcionar também em Lua 5.3, embora apenas os módulos <code>dado.sql</code> e <code>table.extra</code> tenham sido testados (os outros módulos dependem da LuaSQL, que ainda não estava disponível para esta versão da linguagem no lan&ccedil;amento desta biblioteca).
 </p>
@@ -114,6 +114,8 @@ A <a href="../luadoc/index.html">API</a> &eacute; documentada atrav&eacute;s do 
 <h2><a name="history"></a>Hist&oacute;rico</h2>
 
 <ul>
+    <li>[4/dez/2015] Lan&ccedil;amento da vers&atilde;o 1.7.1<br/>
+        Pequenas correções nas variáveis _VERSION de cada módulo.</li>
     <li>[29/aug/2015] Lan&ccedil;amento da vers&atilde;o 1.7<ul>
         <li><a href="luadoc/modules/dado.html#select"><code>select</code></a> agora aceita uma tabela como o valor do par&acirc;metro <code>mode</code>, indicanto que <code>mode</code> deve ser <i>a</i> e o resultado da consulta deve ser armazenado na tabela dada</li>
         <li>Corre&ccedil;&atilde;o de bug em <a href="luadoc/modules/dado.sql.html#quote"><code>sql.quote</code></a>: valores <i>booleanos</i> passam a ser representados como outras constantes do banco, i.e. convertidos para strings e colocados entre par&ecirc;nteses duplos</li>
@@ -187,7 +189,7 @@ Coment&aacute;rios s&atilde;o bem vindos!</p>
 <div id="about">
 	<p><a href="http://validator.w3.org/check?uri=referer">
     <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
-	<p><small>$Id: index.html,v 1.21 2015/08/29 22:54:44 tomas Exp $</small></p>
+	<p><small>$Id: index.html,v 1.22 2015/12/04 20:34:53 tomas Exp $</small></p>
 </div> <!-- id="about" -->
 
 </div> <!-- id="container" -->

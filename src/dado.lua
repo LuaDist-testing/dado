@@ -6,7 +6,7 @@
 --
 -- @class module
 -- @name dado
--- @release $Id: dado.lua,v 1.21 2015/08/24 14:21:25 tomas Exp $
+-- @release $Id: dado.lua,v 1.22 2015/12/04 20:34:53 tomas Exp $
 --------------------------------------------------------------------------------
 
 local strformat = require"string".format
@@ -18,7 +18,7 @@ local error, pcall, require, setmetatable, tostring = error, pcall, require, set
 local _M = {
 	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
 	_DESCRIPTION = "Dado is a set of facilities implemented over LuaSQL connection objects",
-	_VERSION = "Dado 1.6",
+	_VERSION = "Dado 1.7.1",
 }
 
 --------------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name dado.sql
--- @release $Id: sql.lua,v 1.34 2015/08/29 19:22:53 tomas Exp $
+-- @release $Id: sql.lua,v 1.35 2015/12/04 20:34:54 tomas Exp $
 ---------------------------------------------------------------------
 
 local string = require"string"
@@ -176,7 +176,7 @@ end
 return {
 	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
 	_DESCRIPTION = "SQL is a collection of functions to create SQL statements",
-	_VERSION = "Dado SQL 1.6",
+	_VERSION = "Dado SQL 1.7.1",
 
 	quote = quote,
 	escape = escape,
