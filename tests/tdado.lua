@@ -36,6 +36,7 @@ create table tabela (
 	chave integer,
 	campo1 varchar(10),
 	campo2 varchar(10),
+	ativo  boolean,
 	data   date,
 	primary key (chave)
 )]]))
@@ -43,12 +44,13 @@ io.write"."
 
 -- Dados para o teste
 dados = {
-	{ campo1 = "val1", campo2 = "val21", },
-	{ campo1 = "val2", campo2 = "val22", },
-	{ campo1 = "val3", campo2 = "val32", },
+	{ campo1 = "val1", campo2 = "val21", ativo = true, },
+	{ campo1 = "val2", campo2 = "val22", ativo = false, },
+	{ campo1 = "val3", campo2 = "val32", ativo = true, },
 }
 
 -- Preenchendo a tabela
+local sql = require"dado.sql"
 for indice, registro in ipairs(dados) do
 	assert (false == pcall (db.insert, db, "tabela", registro))
 	registro.chave = indice
@@ -60,14 +62,45 @@ io.write"."
 local contador = 0
 local select_iter, cur = db:select ("campo1, campo2", "tabela", "chave >= 1")
 assert (type(select_iter) == "function")
-assert (cur, "Select didn't returned a cursor")
-assert (tostring(cur):find"ursor", "Select didn't returned a cursor object ("..tostring(cur)..")")
+assert (cur, "`select' didn't returned a cursor")
+assert (tostring(cur):find"ursor", "`select' didn't returned a cursor object ("..tostring(cur)..")")
 for campo1, campo2 in select_iter do
 	contador = contador + 1
 	assert (campo1 == dados[contador].campo1)
 	assert (campo2 == dados[contador].campo2)
+	assert (campo3 == dados[contador].campo3)
 end
 cur:close()
+io.write"."
+
+-- Consulta 2
+local contador = #dados
+local rs = {}
+local select_iter, cur = db:select ("campo1, campo2", "tabela", "chave >= 1", "order by chave desc", rs)
+assert (type(select_iter) == "function")
+assert (cur, "`select' didn't returned a cursor")
+assert (tostring(cur):find"ursor", "`select' didn't returned a cursor object ("..tostring(cur)..")")
+for result in select_iter do
+	assert (type(result) == "table", "`select' didn't returned a table")
+	assert (result == rs, "`select' returned a different table!")
+	assert (result.campo1 == dados[contador].campo1)
+	assert (result.campo2 == dados[contador].campo2)
+	contador = contador - 1
+end
+cur:close()
+io.write"."
+
+-- Consulta 3
+local total = #dados
+local rs = db:selectall ("campo1, campo2", "tabela", "chave >= 1", "order by chave desc")
+assert (type(rs) == "table", "`selectall' didn't returned a table")
+for i = 1, #rs do
+	local linha = rs[i]
+	assert (type(linha) == "table", "`selectall' didn't returned a table for row #"..i)
+	local c = total+1 - i
+	assert (linha.campo1 == dados[c].campo1)
+	assert (linha.campo2 == dados[c].campo2)
+end
 io.write"."
 
 -- Teste de valores especiais para datas
@@ -75,7 +108,7 @@ local n = #dados + 1
 db:insert ("tabela", {
 	campo1 = "val"..n,
 	chave = n,
-	data = "(CURRENT_TIMESTAMP)",
+	data = "((CURRENT_TIMESTAMP))",
 })
 io.write"."
 
@@ -94,8 +127,8 @@ assert (log_table[1] == "select * from tabela", ">>"..tostring(log_table[1]))
 io.write"."
 
 -- Wrapping an already open connection
-local luasql = require("luasql."..driver)
 driver = driver or "postgres"
+local luasql = require("luasql."..driver)
 local env = luasql[driver]()
 local conn = env:connect(dbname, user, pass)
 local new_db = dado.wrap_connection(conn)
@@ -114,4 +147,4 @@ new_db:close()
 assert (new_db.conn == nil)
 io.write"."
 
-print" Ok!"
+print(' '..dado._VERSION.." Ok!")

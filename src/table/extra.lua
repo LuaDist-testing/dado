@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name table.extra
--- @release $Id: extra.lua,v 1.13 2015/03/31 16:31:26 tomas Exp $
+-- @release $Id: extra.lua,v 1.14 2015/08/27 13:06:25 tomas Exp $
 ---------------------------------------------------------------------
 
 local assert, pairs, type = assert, pairs, type
@@ -109,7 +109,16 @@ local function twostr (tab, ksep, vsep, kfilter, vfilter)
 	for key, val in pairs (tab) do
 		i = i+1
 		k[i] = kfilter and kfilter(key) or strformat("%s", key)
-		v[i] = vfilter and vfilter(val) or strformat("%s", val)
+		if kfilter then
+			k[i] = kfilter(key)
+		else
+			k[i] = strformat("%s", key)
+		end
+		if vfilter then
+			v[i] = vfilter(val)
+		else
+			v[i] = strformat("%s", val)
+		end
 	end
 	return tconcat (k, ksep), tconcat (v, vsep)
 end

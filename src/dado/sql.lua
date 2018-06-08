@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name dado.sql
--- @release $Id: sql.lua,v 1.32 2015/03/31 16:31:08 tomas Exp $
+-- @release $Id: sql.lua,v 1.34 2015/08/29 19:22:53 tomas Exp $
 ---------------------------------------------------------------------
 
 local string = require"string"
@@ -39,8 +39,10 @@ end
 ---------------------------------------------------------------------
 local function quote (s)
 	local ts = type(s)
-	if ts == "number" or ts == "boolean" then
+	if ts == "number" then
 		return s
+	elseif ts == "boolean" then
+		return strformat ("((%s))", s)
 
 	elseif ts == "string"
 		and s:match"^%b()$" and s:sub(2, -2):match"^%b()$" then
@@ -79,7 +81,7 @@ end
 local function isinteger (id)
 	local tid = type(id)
 	if tid == "string" then
-		return (not id:match"%a") and (tonumber(id) ~= nil)
+		return id:match"^%s*%-?%d+%s*$"
 	else
 		return tid == "number"
 	end

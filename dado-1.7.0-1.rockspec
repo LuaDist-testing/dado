@@ -2,7 +2,7 @@
 
 package = "dado"
 
-version = "1.6.0-1"
+version = "1.7.0-1"
 
 description = {
    summary = "Database Facilities for LuaSQL",
@@ -24,13 +24,13 @@ dependencies = {
 
 -- LuaDist source
 source = {
-  tag = "1.6.0-1",
+  tag = "1.7.0-1",
   url = "git://github.com/LuaDist-testing/dado.git"
 }
 -- Original source
 -- source = {
---    url = "http://www.ccpa.puc-rio.br/software/dado/download/dado-1.6.0.tar.gz",
---    md5 = "de225d79c92a6e2752204fa29a416d24",
+--    url = "http://www.ccpa.puc-rio.br/software/dado/download/dado-1.7.0.tar.gz",
+--    md5 = "5a8d933fc6f00490dfb448bc60dba531",
 -- }
 
 build = {

@@ -42,4 +42,4 @@ associated with database rows.  These objects use a mechanism to retrieve
 attributes automatically from the database.  The library also offers a class
 constructor function to ease the creation of classes of database objects.
 
-$Id: README,v 1.7 2011-03-25 21:43:19 tomas Exp $
+$Id: README,v 1.7 2011/03/25 21:43:19 tomas Exp $

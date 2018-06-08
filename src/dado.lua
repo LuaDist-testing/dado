@@ -6,7 +6,7 @@
 --
 -- @class module
 -- @name dado
--- @release $Id: dado.lua,v 1.20 2015/03/31 16:30:11 tomas Exp $
+-- @release $Id: dado.lua,v 1.21 2015/08/24 14:21:25 tomas Exp $
 --------------------------------------------------------------------------------
 
 local strformat = require"string".format
@@ -122,9 +122,10 @@ end
 -- @param cond String with where-clause (and following SQL text).
 -- @param extra String with extra SQL text (to be used when there is no
 --	where-clause).
--- @param mode String indicating fetch mode
---	(this argument also indicates whether the function should return
---	a table or the values directly).
+-- @param mode String or Table indicating fetch mode (according to LuaSQL mode
+--	parameter of fetch method); if it is a table, the result will be stored
+--	inside it and the actual mode will be 'a'; in both cases, the function
+--	should return a table with the result set.
 -- @see dado.sql.select
 -- @return Iterator over the result set.
 -- @return Cursor object (to allow explicit closing).
@@ -132,12 +133,20 @@ end
 function _M.select (self, columns, tabname, cond, extra, mode)
 	local stmt = sql.select (columns, tabname, cond, extra)
 	local cur = self:assertexec (stmt)
+	local tm = type (mode)
+	local t
+	local _mode = mode
+	if tm == "table" then
+		t = mode
+		_mode = 'a'
+	end
 	return function ()
 		-- This table must be created inside this function or it could
 		-- make `selectall' to return the same row every time.
-		local t
-		if mode then t = {} end
-		return cur:fetch (t, mode)
+		if tm == "string" then
+			t = {}
+		end
+		return cur:fetch (t, _mode)
 	end, cur
 end
 
@@ -156,10 +165,12 @@ function _M.selectall (self, columns, tabname, cond, extra, mode)
 	mode = mode or "a"
 	local rs = {}
 	local i = 0
-	for row in self:select (columns, tabname, cond, extra, mode) do
+	local iter, cur = self:select (columns, tabname, cond, extra, mode)
+	for row in iter do
 		i = i+1
 		rs[i] = row
 	end
+	cur:close()
 	return rs
 end
 

@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Dado: Database Facilities for LuaSQL</title>
-    <link rel="stylesheet" href="http://www.keplerproject.org/doc.css" type="text/css"/>
+    <link rel="stylesheet" href="https://keplerproject.github.io/luasql/doc/us/doc.css" type="text/css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
@@ -81,9 +81,9 @@ columns, or classes that are not related to only one database table.
 <h2><a name="status"></a>Status</h2>
 
 <p>
-Current version is 1.6.
+Current version is 1.7.
 It was developed for both Lua 5.1 and Lua 5.2.
-It should run in Lua 5.3 also.
+It should run in Lua 5.3 also, although only the modules <code>dado.sql</code> and <code>table.extra</code> were tested (the other ones require LuaSQL which was not available for Lua 5.3 at the time of this release).
 </p>
 
 
@@ -115,6 +115,12 @@ The <a href="luadoc/index.html">API</a> is documented with LDoc.
 <h2><a name="history"></a>History</h2>
 
 <ul>
+    <li>[29/aug/2015] Version 1.7 released<ul>
+        <li><a href="luadoc/modules/dado.html#select"><code>select</code></a> now accepts a table as the value of <code>mode</code> parameter, indicating the <i>mode</i> should be <i>a</i> and the result set should be stored inside this table</li>
+        <li>Bug correction in <a href="luadoc/modules/dado.sql.html#quote"><code>sql.quote</code></a>: boolean values are quoted as database constants, i.e. converted to strings between double parentheses</li>
+        <li>Bug correction in <a href="luadoc/modules/dado.sql.html#isinteger"><code>sql.isinteger</code></a>: fractional values were incorrectly accepted</li>
+        <li>Bug correction in <a href="luadoc/modules/table.extra.html#twostr"><code>table.extra.twostr</code></a>: boolean values were not correctly serialized</li>
+    </ul></li>
     <li>[31/mar/2015] Version 1.6 released<br/>
         <a href="luadoc/modules/dado.sql.html#quote"><code>sql.quote</code></a> now accepts Lua booleans as values to the database; values of this type are not quoted, they are treated as numbers</li>
     <li>[15/oct/2013] Version 1.5.2 released<br/>
@@ -181,7 +187,7 @@ Comments are welcome!</p>
 <div id="about">
 	<p><a href="http://validator.w3.org/check?uri=referer">
     <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
-	<p><small>$Id: index.html,v 1.32 2015/03/31 16:43:13 tomas Exp $</small></p>
+	<p><small>$Id: index.html,v 1.34 2015/08/29 22:54:44 tomas Exp $</small></p>
 </div> <!-- id="about" -->
 
 </div> <!-- id="container" -->
