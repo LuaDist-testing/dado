@@ -82,6 +82,13 @@ local sub = sql.subselect("id", "usuario", "nome ilike "..sql.quote"tomas%")
 assert (sql.AND { id = sub } == [[id=((select id from usuario where nome ilike 'tomas%'))]], sql.AND { id = sub })
 io.write"."
 
+-- quotedconcat
+assert (sql.quotedconcat{} == '')
+assert (sql.quotedconcat{1,2} == "1,2")
+assert (sql.quotedconcat{ "INF", "ELE", "COM", } == "'INF','ELE','COM'")
+assert (sql.quotedconcat{ "ROBERTO D'ÁVILA", "JOSÉ D'ABREU", } == "'ROBERTO D''ÁVILA','JOSÉ D''ABREU'")
+io.write"."
+
 -- integer check
 assert (sql.isinteger(1), "Couldn't detect number 1")
 assert (sql.isinteger(0), "Couldn't detect number 0")

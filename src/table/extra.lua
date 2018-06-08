@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name table.extra
--- @release $Id: extra.lua,v 1.15 2015/12/04 20:34:54 tomas Exp $
+-- @release $Id: extra.lua,v 1.16 2017/02/22 18:37:20 tomas Exp $
 ---------------------------------------------------------------------
 
 local assert, pairs, type = assert, pairs, type
@@ -125,9 +125,9 @@ end
 
 --------------------------------------------------------------------------------
 return {
-	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
+	_COPYRIGHT = "Copyright (C) 2008-2017 PUC-Rio",
 	_DESCRIPTION = "Table Extra contains some functions used to manipulate tables by other Dado modules",
-	_VERSION = "Table Extra 1.7.1",
+	_VERSION = "Table Extra 1.8.0",
 
 	fullconcat = fullconcat,
 	pfullconcat = pfullconcat,

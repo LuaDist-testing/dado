@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name dado.sql
--- @release $Id: sql.lua,v 1.35 2015/12/04 20:34:54 tomas Exp $
+-- @release $Id: sql.lua,v 1.36 2017/02/22 18:35:37 tomas Exp $
 ---------------------------------------------------------------------
 
 local string = require"string"
@@ -50,6 +50,21 @@ local function quote (s)
 	else
 		return "'"..escape (s).."'"
 	end
+end
+
+---------------------------------------------------------------------
+-- Quote all values associated with the integer keys in a table and
+-- concat them on a string, separated by a comma (,).
+-- This function is particularly useful to produce expressions for the IN
+-- operator.
+-- @class function
+-- @name quotedconcat
+-- @param tab Table with the sequence of values.
+-- @return String in the for of a comma separated values.
+---------------------------------------------------------------------
+local function quotedconcat (tab)
+	local _, r = tabtwostr (tab, nil, ',', nil, quote)
+	return r
 end
 
 ---------------------------------------------------------------------
@@ -174,11 +189,12 @@ end
 
 --------------------------------------------------------------------------------
 return {
-	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
+	_COPYRIGHT = "Copyright (C) 2008-2017 PUC-Rio",
 	_DESCRIPTION = "SQL is a collection of functions to create SQL statements",
-	_VERSION = "Dado SQL 1.7.1",
+	_VERSION = "Dado SQL 1.8.0",
 
 	quote = quote,
+	quotedconcat = quotedconcat,
 	escape = escape,
 	AND = AND,
 	isinteger = isinteger,

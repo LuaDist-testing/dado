@@ -2,11 +2,9 @@
 -- Dado is a set of facilities implemented over LuaSQL connection objects.
 -- The module's goal is to simplify the most used database operations.
 --
--- Version 1.6.
---
 -- @class module
 -- @name dado
--- @release $Id: dado.lua,v 1.22 2015/12/04 20:34:53 tomas Exp $
+-- @release $Id: dado.lua,v 1.23 2017/02/22 18:37:20 tomas Exp $
 --------------------------------------------------------------------------------
 
 local strformat = require"string".format
@@ -15,10 +13,10 @@ local sql       = require"dado.sql"
 local error, pcall, require, setmetatable, tostring = error, pcall, require, setmetatable, tostring
 
 --=-----------------------------------------------------------------------------
-local _M = {
-	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
+local M = {
+	_COPYRIGHT = "Copyright (C) 2008-2017 PUC-Rio",
 	_DESCRIPTION = "Dado is a set of facilities implemented over LuaSQL connection objects",
-	_VERSION = "Dado 1.7.1",
+	_VERSION = "Dado 1.8.0",
 }
 
 --------------------------------------------------------------------------------
@@ -28,7 +26,7 @@ local _M = {
 -- @return Cursor or number of rows affected by the command
 --	(it never returns nil,errmsg).
 --------------------------------------------------------------------------------
-function _M.assertexec (self, stmt)
+function M.assertexec (self, stmt)
 	local cur, msg = self.conn:execute (stmt)
 	return cur or error (msg.." SQL = { "..stmt.." }", 2)
 end
@@ -37,7 +35,7 @@ end
 -- Commits the current transaction.
 -- @param self Dado Object.
 --------------------------------------------------------------------------------
-function _M.commit (self)
+function M.commit (self)
 	return self.conn:commit ()
 end
 
@@ -45,7 +43,7 @@ end
 -- Rolls back the current transaction.
 -- @param self Dado Object.
 --------------------------------------------------------------------------------
-function _M.rollback (self)
+function M.rollback (self)
 	return self.conn:rollback ()
 end
 
@@ -54,7 +52,7 @@ end
 -- @param self Dado Object.
 -- @param bool Boolean indicating to turn autocommit on (true) or off (false).
 --------------------------------------------------------------------------------
-function _M.setautocommit (self, bool)
+function M.setautocommit (self, bool)
 	return self.conn:setautocommit (bool)
 end
 
@@ -67,7 +65,7 @@ end
 --	with the sequence.
 -- @return String with next sequence value.
 --------------------------------------------------------------------------------
-function _M.nextval (self, seq, field)
+function M.nextval (self, seq, field)
 	if field then
 		seq = strformat ("%s_%s_seq", seq, field)
 	end
@@ -83,7 +81,7 @@ end
 -- @see dado.sql.delete
 -- @return Number of rows affected.
 --------------------------------------------------------------------------------
-function _M.delete (self, tabname, cond)
+function M.delete (self, tabname, cond)
 	return self:assertexec (sql.delete (tabname, cond))
 end
 
@@ -95,7 +93,7 @@ end
 -- @see dado.sql.insert
 -- @return Number of rows affected.
 --------------------------------------------------------------------------------
-function _M.insert (self, tabname, contents)
+function M.insert (self, tabname, contents)
 	return self:assertexec (sql.insert (tabname, contents))
 end
 
@@ -108,7 +106,7 @@ end
 -- @see dado.sql.update
 -- @return Number of rows affected.
 --------------------------------------------------------------------------------
-function _M.update (self, tabname, contents, cond)
+function M.update (self, tabname, contents, cond)
 	return self:assertexec (sql.update (tabname, contents, cond))
 end
 
@@ -130,7 +128,7 @@ end
 -- @return Iterator over the result set.
 -- @return Cursor object (to allow explicit closing).
 --------------------------------------------------------------------------------
-function _M.select (self, columns, tabname, cond, extra, mode)
+function M.select (self, columns, tabname, cond, extra, mode)
 	local stmt = sql.select (columns, tabname, cond, extra)
 	local cur = self:assertexec (stmt)
 	local tm = type (mode)
@@ -161,7 +159,7 @@ end
 -- @see dado.sql.select
 -- @return Table with the entire result set.
 --------------------------------------------------------------------------------
-function _M.selectall (self, columns, tabname, cond, extra, mode)
+function M.selectall (self, columns, tabname, cond, extra, mode)
 	mode = mode or "a"
 	local rs = {}
 	local i = 0
@@ -175,7 +173,7 @@ function _M.selectall (self, columns, tabname, cond, extra, mode)
 end
 
 
-local mt = { __index = _M, }
+local mt = { __index = M, }
 
 --------------------------------------------------------------------------------
 -- Wraps a database connection into a connection object.
@@ -183,7 +181,7 @@ local mt = { __index = _M, }
 -- @param key String with the key to the database object in the cache.
 -- @return Dado Connection.
 --------------------------------------------------------------------------------
-function _M.wrap_connection (conn, key)
+function M.wrap_connection (conn, key)
 	local obj = { conn = conn, key = key, }
 	setmetatable (obj, mt)
 	return obj
@@ -203,7 +201,7 @@ end
 -- @param driver String with LuaSQL's driver (default = "postgres").
 -- @return Connection.
 --------------------------------------------------------------------------------
-function _M.connect (dbname, dbuser, dbpass, driver, ...)
+function M.connect (dbname, dbuser, dbpass, driver, ...)
 	driver = driver or "postgres"
 
 	-- Creating new object
@@ -222,14 +220,14 @@ function _M.connect (dbname, dbuser, dbpass, driver, ...)
 		-- Storing connection on the cache
 		cache[key] = conn
 	end
-	return _M.wrap_connection (conn, key)
+	return M.wrap_connection (conn, key)
 end
 
 --------------------------------------------------------------------------------
 -- Closes the connection and invalidates the object.
 -- @param self Dado Object.
 --------------------------------------------------------------------------------
-function _M.close (self)
+function M.close (self)
 	if self.key then
 		cache[self.key] = nil
 	end
@@ -239,4 +237,4 @@ function _M.close (self)
 end
 
 --=-----------------------------------------------------------------------------
-return _M
+return M
