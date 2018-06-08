@@ -2,7 +2,7 @@
 
 package = "dado"
 
-version = "1.1.0-3"
+version = "1.2.0-0"
 
 description = {
    summary = "Database Facilities for LuaSQL",
@@ -22,13 +22,13 @@ dependencies = {
 
 -- LuaDist source
 source = {
-  tag = "1.1.0-3",
+  tag = "1.2.0-0",
   url = "git://github.com/LuaDist-testing/dado.git"
 }
 -- Original source
 -- source = {
---    url = "http://luaforge.net/frs/download.php/4274/dado-1.1.0.tar.gz",
---    md5 = "2f9aea751230f539378248cf0bd8afe8",
+--    url = "http://luaforge.net/frs/download.php/4588/dado-1.2.0.tar.gz",
+--    md5 = "c32df33c8a4b6d364d72f084f3a144e4",
 -- }
 
 build = {
