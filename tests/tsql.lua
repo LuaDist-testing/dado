@@ -1,25 +1,43 @@
 #!/usr/local/bin/lua
 
 local sql = require"dado.sql"
+print(sql._VERSION)
 
 -- escape
-assert (sql.escape([[a'b]], "'") == [[a\'b]])
-assert (sql.escape([[a'b]], "'", "''") == [[a''b]])
-assert (sql.escape([[a"b]], '"', '&quot;') == [[a&quot;b]])
+assert (sql.escape([[a'b]]) == [[a''b]])
+assert (sql.escape([[a"b]]) == [[a"b]])
 local com_zero = "'abc\0def'"
-assert (sql.escape(com_zero) == "'abcdef'", "Cannot escape \\0")
+assert (sql.escape(com_zero) == "''abcdef''", "Cannot escape \\0")
 io.write"."
 
 -- quote
-assert (sql.quote([[a'b]]) == [['a\'b']])
-assert (sql.quote([[a\'b]]) == [['a\\\'b']])
-assert (sql.quote([[\'b\']]) == [['\\\'b\\\'']])
-assert (sql.quote([[()\'b\'()]]) == [['()\\\'b\\\'()']])
-assert (sql.quote([[(NULL)]]) == [[(NULL)]])
+assert (sql.quote([[a'b]]) == [['a''b']])
+assert (sql.quote([[a\'b]]) == [['a\''b']])
+assert (sql.quote([['b']]) == [['''b''']])
+assert (sql.quote([[()'b'()]]) == [['()''b''()']])
+assert (sql.quote([[(NULL)]]) == [['(NULL)']])
+assert (sql.quote([[((NULL))]]) == [[((NULL))]])
+assert (sql.quote([[(CURRENT_DATE)]]) == [['(CURRENT_DATE)']])
+assert (sql.quote([[((CURRENT_DATE))]]) == [[((CURRENT_DATE))]])
+assert (sql.quote([[(SIGLA/MALUCA)]]) == [['(SIGLA/MALUCA)']])
+assert (sql.quote([[((SIGLA/MALUCA))]]) == [[((SIGLA/MALUCA))]])
+assert (sql.quote([[(select col from tab where cond)]]) == [['(select col from tab where cond)']])
+assert (sql.quote([[((select col from tab where cond))]]) == [[((select col from tab where cond))]])
+assert (sql.quote([[(a comment inside parens should be quoted)]]) == [['(a comment inside parens should be quoted)']])
+assert (sql.quote([[((a comment inside double-balanced-parens should NOT be quoted))]]) == [[((a comment inside double-balanced-parens should NOT be quoted))]])
 assert (sql.quote(1) == 1)
-assert (sql.quote("a'b") == [['a\'b']])
-assert (sql.quote("a'b", "'", "''") == [['a''b']])
-assert (sql.quote(com_zero) == [['\'abcdef\'']], "Cannot quote '\\0'")
+assert (sql.quote("(1)") == "'(1)'")
+assert (sql.quote("((1))") == "((1))")
+assert (sql.quote(1.5) == 1.5)
+assert (sql.quote("(1.5)") == "'(1.5)'")
+assert (sql.quote("((1.5))") == "((1.5))")
+assert (sql.quote("(1,2)") == "'(1,2)'")
+assert (sql.quote("((1,2))") == "((1,2))")
+assert (sql.quote("md5('123456')") == "'md5(''123456'')'")
+assert (sql.quote("(md5('123456'))") == "'(md5(''123456''))'")
+assert (sql.quote("((md5('123456')))") == "((md5('123456')))")
+assert (sql.quote("a'b") == [['a''b']])
+assert (sql.quote(com_zero) == [['''abcdef''']], "Cannot quote '\\0'")
 io.write"."
 
 -- select
@@ -50,7 +68,7 @@ io.write"."
 -- simple AND expression
 assert (sql.AND { a = 1, b = 2 } == "a=1 AND b=2")
 local sub = sql.subselect("id", "usuario", "nome ilike "..sql.quote"tomas%")
-assert (sql.AND { id = sub } == [[id=(select id from usuario where nome ilike 'tomas%')]], sql.AND { id = sub })
+assert (sql.AND { id = sub } == [[id=((select id from usuario where nome ilike 'tomas%'))]], sql.AND { id = sub })
 io.write"."
 
 -- integer check

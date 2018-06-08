@@ -53,9 +53,13 @@
 <p>Dado is a set of facilities implemented over LuaSQL connection objects.</p>
 <p>
  The module's goal is to simplify the most used database operations.
-
- Version 1.4.2.
+<p> Version 1.5.2.
 </p>
+    <h3>Info:</h3>
+    <ul>
+        <li><strong>Release</strong>: $Id: dado.lua,v 1.19 2013-10-12 01:32:43 tomas Exp $</li>
+    </ul>
+
 
 <h2><a href="#Functions">Functions</a></h2>
 <table class="function_list">
@@ -118,27 +122,31 @@
 
 
     <h2><a name="Functions"></a>Functions</h2>
-    
     <dl class="function">
     <dt>
     <a name = "assertexec"></a>
     <strong>assertexec&nbsp;(self, stmt)</strong>
     </dt>
     <dd>
-    Executes a SQL statement raising an error if something goes wrong. 
+    Executes a SQL statement raising an error if something goes wrong.
+	(it never returns nil,errmsg).
+
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>stmt</em></code>:  String with SQL statement.</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">stmt</span>
+         String with SQL statement.</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
-        Cursor or number of rows affected by the command
-	(it never returns nil,errmsg).
+
+         Cursor or number of rows affected by the command
     </ol>
+
+
 
 
 </dd>
@@ -147,12 +155,14 @@
     <strong>commit&nbsp;(self)</strong>
     </dt>
     <dd>
-    Commits the current transaction. 
+    Commits the current transaction.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
     </ul>
+
 
 
 
@@ -163,12 +173,14 @@
     <strong>rollback&nbsp;(self)</strong>
     </dt>
     <dd>
-    Rolls back the current transaction. 
+    Rolls back the current transaction.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
     </ul>
+
 
 
 
@@ -179,13 +191,16 @@
     <strong>setautocommit&nbsp;(self, bool)</strong>
     </dt>
     <dd>
-    Turn autocommit mode on or off. 
+    Turn autocommit mode on or off.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>bool</em></code>:  Boolean indicating to turn autocommit on (true) or off (false).</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">bool</span>
+         Boolean indicating to turn autocommit on (true) or off (false).</li>
     </ul>
+
 
 
 
@@ -196,22 +211,27 @@
     <strong>nextval&nbsp;(self, seq, field)</strong>
     </dt>
     <dd>
-    Obtains next value from a sequence. 
+    Obtains next value from a sequence.
+	with the sequence.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>seq</em></code>:  String with sequence name (complete name or just the name of the
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">seq</span>
+         String with sequence name (complete name or just the name of the
 	table).</li>
-       <li><code><em>field</em></code>:  String (optional) with the name of the primary key associated
-	with the sequence.</li>
+        <li><span class="parameter">field</span>
+         String (optional) with the name of the primary key associated</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
+
         String with next sequence value.
     </ol>
+
+
 
 
 </dd>
@@ -220,18 +240,21 @@
     <strong>delete&nbsp;(self, tabname, cond)</strong>
     </dt>
     <dd>
-    Deletes a row. 
+    Deletes a row.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>tabname</em></code>:  String with table name.</li>
-       <li><code><em>cond</em></code>:  String with where-clause (and following SQL text).</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">tabname</span>
+         String with table name.</li>
+        <li><span class="parameter">cond</span>
+         String with where-clause (and following SQL text).</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
+
         Number of rows affected.
     </ol>
 
@@ -240,24 +263,29 @@
     <ul>
          <a href="../modules/dado.sql.html#delete">dado.sql.delete</a>
     </ul>
+
+
 </dd>
     <dt>
     <a name = "insert"></a>
     <strong>insert&nbsp;(self, tabname, contents)</strong>
     </dt>
     <dd>
-    Inserts a new row. 
+    Inserts a new row.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>tabname</em></code>:  String with table name.</li>
-       <li><code><em>contents</em></code>:  Table with field-value pairs.</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">tabname</span>
+         String with table name.</li>
+        <li><span class="parameter">contents</span>
+         Table with field-value pairs.</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
+
         Number of rows affected.
     </ol>
 
@@ -266,25 +294,31 @@
     <ul>
          <a href="../modules/dado.sql.html#insert">dado.sql.insert</a>
     </ul>
+
+
 </dd>
     <dt>
     <a name = "update"></a>
     <strong>update&nbsp;(self, tabname, contents, cond)</strong>
     </dt>
     <dd>
-    Updates existing rows. 
+    Updates existing rows.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>tabname</em></code>:  String with table name.</li>
-       <li><code><em>contents</em></code>:  Table with field-value pairs.</li>
-       <li><code><em>cond</em></code>:  String with where-clause (and following SQL text).</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">tabname</span>
+         String with table name.</li>
+        <li><span class="parameter">contents</span>
+         Table with field-value pairs.</li>
+        <li><span class="parameter">cond</span>
+         String with where-clause (and following SQL text).</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
+
         Number of rows affected.
     </ol>
 
@@ -293,34 +327,43 @@
     <ul>
          <a href="../modules/dado.sql.html#update">dado.sql.update</a>
     </ul>
+
+
 </dd>
     <dt>
     <a name = "select"></a>
     <strong>select&nbsp;(self, columns, tabname, cond, extra, mode)</strong>
     </dt>
     <dd>
-    Retrieves rows. 
+    Retrieves rows.
  Creates an iterator over the result of a query.
  This iterator could be used in for-loops.
+	(this argument also indicates whether the function should return
+	a table or the values directly).
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>columns</em></code>:  String with fields list.</li>
-       <li><code><em>tabname</em></code>:  String with table name.</li>
-       <li><code><em>cond</em></code>:  String with where-clause (and following SQL text).</li>
-       <li><code><em>extra</em></code>:  String with extra SQL text (to be used when there is no
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">columns</span>
+         String with fields list.</li>
+        <li><span class="parameter">tabname</span>
+         String with table name.</li>
+        <li><span class="parameter">cond</span>
+         String with where-clause (and following SQL text).</li>
+        <li><span class="parameter">extra</span>
+         String with extra SQL text (to be used when there is no
 	where-clause).</li>
-       <li><code><em>mode</em></code>:  String indicating fetch mode
-	(this argument also indicates whether the function should return
-	a table or the values directly).</li>
+        <li><span class="parameter">mode</span>
+         String indicating fetch mode</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
-        <li>Iterator over the result set.</li>
-        <li>Cursor object (to allow explicit closing).</li>
+        <li>
+        Iterator over the result set.</li>
+        <li>
+        Cursor object (to allow explicit closing).</li>
     </ol>
 
 
@@ -328,27 +371,35 @@
     <ul>
          <a href="../modules/dado.sql.html#select">dado.sql.select</a>
     </ul>
+
+
 </dd>
     <dt>
     <a name = "selectall"></a>
     <strong>selectall&nbsp;(self, columns, tabname, cond, extra, mode)</strong>
     </dt>
     <dd>
-    Retrieves all rows. 
+    Retrieves all rows.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
-       <li><code><em>columns</em></code>:  String with fields list.</li>
-       <li><code><em>tabname</em></code>:  String with table name.</li>
-       <li><code><em>cond</em></code>:  String with where-clause (and following SQL text).</li>
-       <li><code><em>extra</em></code>:  String with extra SQL text.</li>
-       <li><code><em>mode</em></code>:  String indicating fetch mode (default == 'a').</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
+        <li><span class="parameter">columns</span>
+         String with fields list.</li>
+        <li><span class="parameter">tabname</span>
+         String with table name.</li>
+        <li><span class="parameter">cond</span>
+         String with where-clause (and following SQL text).</li>
+        <li><span class="parameter">extra</span>
+         String with extra SQL text.</li>
+        <li><span class="parameter">mode</span>
+         String indicating fetch mode (default == 'a').</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
+
         Table with the entire result set.
     </ol>
 
@@ -357,25 +408,31 @@
     <ul>
          <a href="../modules/dado.sql.html#select">dado.sql.select</a>
     </ul>
+
+
 </dd>
     <dt>
     <a name = "wrap_connection"></a>
     <strong>wrap_connection&nbsp;(conn, key)</strong>
     </dt>
     <dd>
-    Wraps a database connection into a connection object. 
+    Wraps a database connection into a connection object.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>conn</em></code>:  Object with LuaSQL database connection.</li>
-       <li><code><em>key</em></code>:  String with the key to the database object in the cache.</li>
+        <li><span class="parameter">conn</span>
+         Object with LuaSQL database connection.</li>
+        <li><span class="parameter">key</span>
+         String with the key to the database object in the cache.</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
+
         Dado Connection.
     </ol>
+
+
 
 
 </dd>
@@ -384,21 +441,27 @@
     <strong>connect&nbsp;(dbname, dbuser, dbpass, driver)</strong>
     </dt>
     <dd>
-    Tries to use a connection in the cache or opens a new one. 
+    Tries to use a connection in the cache or opens a new one.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>dbname</em></code>:  String with database name.</li>
-       <li><code><em>dbuser</em></code>:  String with database username (optional).</li>
-       <li><code><em>dbpass</em></code>:  String with database user password (optional).</li>
-       <li><code><em>driver</em></code>:  String with LuaSQL's driver (default = "postgres").</li>
+        <li><span class="parameter">dbname</span>
+         String with database name.</li>
+        <li><span class="parameter">dbuser</span>
+         String with database username (optional).</li>
+        <li><span class="parameter">dbpass</span>
+         String with database user password (optional).</li>
+        <li><span class="parameter">driver</span>
+         String with LuaSQL's driver (default = "postgres").</li>
     </ul>
-
 
     <h3>Returns:</h3>
     <ol>
+
         Connection.
     </ol>
+
+
 
 
 </dd>
@@ -407,12 +470,14 @@
     <strong>close&nbsp;(self)</strong>
     </dt>
     <dd>
-    Closes the connection and invalidates the object. 
+    Closes the connection and invalidates the object.
 
     <h3>Parameters:</h3>
     <ul>
-       <li><code><em>self</em></code>:  Dado Object.</li>
+        <li><span class="parameter">self</span>
+         Dado Object.</li>
     </ul>
+
 
 
 
@@ -424,7 +489,7 @@
 </div> <!-- id="content" -->
 </div> <!-- id="main" -->
 <div id="about">
-<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.2</a></i>
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.3</a></i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>

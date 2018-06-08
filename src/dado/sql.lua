@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name dado.sql
--- @release $Id: sql.lua,v 1.22 2013/02/08 01:53:11 tomas Exp $
+-- @release $Id: sql.lua,v 1.31 2013-10-15 19:25:08 tomas Exp $
 ---------------------------------------------------------------------
 
 local string = require"string"
@@ -14,42 +14,39 @@ local tonumber, type = tonumber, type
 
 ---------------------------------------------------------------------
 -- Escape a character or a character class in a string.
--- It also removes character with codes < 32.
+-- It also removes character with codes < 32 (except \t (\9), \n (\10)
+--	and \r (\13)).
 -- @class function
 -- @name escape
 -- @param s String to be processed.
--- @param char String with gsub's pattern to be escaped inside
---  the string (default = "%s").
--- @param sub String with escaped character (default = "\\%1").
 -- @return String or nil if no string was given.
 ---------------------------------------------------------------------
-local function escape (s, char, sub)
+local function escape (s)
 	if not s then return end
-	char = char or "%s"
-	sub = sub or "\\%1"
 	s = gsub (s, "[%z\1\2\3\4\5\6\7\8\11\12\14\15\16\17\18\19\20\21\22\23\24\25\26\27\28\29\30\31]", "")
-	s = gsub (s, "("..char..")", sub)
+	s = gsub (s, "'", "''")
 	return s
 end
 
 ---------------------------------------------------------------------
 -- Quote a value to be included in an SQL statement.
--- The exception is when the string is surrounded by "()";
+-- The exception is when the string is surrounded by balanced "(())";
 -- in this case it won't be quoted.
 -- @class function
 -- @name quote
--- @param s String or number.
--- @param quote String with quote character (default = "'").
--- @param sub String with escape character (default = "\\'").
+-- @param s String or number (numbers aren't quoted).
 -- @return String with prepared value.
 ---------------------------------------------------------------------
-local function quote (s, quote, sub)
-	quote = quote or "'"
-	sub = sub or "\\'"
-	if type(s) == "number" or strfind (s, "^(%b())$") then
+local function quote (s)
+	local ts = type(s)
+	if ts == "number" then
+		return s
+
+	elseif ts == "string"
+		and s:match"^%b()$" and s:sub(2, -2):match"^%b()$" then
 		return s
 	else
-		return quote..escape (escape (s, "\\", "\\\\"), quote, sub)..quote
+		return "'"..escape (s).."'"
 	end
 end
 
@@ -122,7 +119,7 @@ end
 -- @return String with SELECT command.
 ---------------------------------------------------------------------
 local function subselect (columns, tabname, cond, extra)
-	return "("..select (columns, tabname, cond, extra)..")"
+	return "(("..select (columns, tabname, cond, extra).."))"
 end
 
 ---------------------------------------------------------------------
@@ -175,9 +172,9 @@ end
 
 --------------------------------------------------------------------------------
 return {
-	_COPYRIGHT = "Copyright (C) 2010-2012 PUC-Rio",
+	_COPYRIGHT = "Copyright (C) 2008-2013 PUC-Rio",
 	_DESCRIPTION = "SQL is a collection of functions to create SQL statements",
-	_VERSION = "Dado SQL 1.4.2",
+	_VERSION = "Dado SQL 1.5.2",
 
 	quote = quote,
 	escape = escape,

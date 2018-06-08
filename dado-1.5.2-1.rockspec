@@ -2,7 +2,7 @@
 
 package = "dado"
 
-version = "1.5.0-1"
+version = "1.5.2-1"
 
 description = {
    summary = "Database Facilities for LuaSQL",
@@ -24,13 +24,13 @@ dependencies = {
 
 -- LuaDist source
 source = {
-  tag = "1.5.0-1",
+  tag = "1.5.2-1",
   url = "git://github.com/LuaDist-testing/dado.git"
 }
 -- Original source
 -- source = {
---    url = "http://www.ccpa.puc-rio.br/software/dado/download/dado-1.5.0.tar.gz",
---    md5 = "e698d15ca8ad17af61ffb53f5a2664bd",
+--    url = "http://www.ccpa.puc-rio.br/software/dado/download/dado-1.5.2.tar.gz",
+--    md5 = "951c8d61af5bd4151fbf4ebad779bc94",
 -- }
 
 build = {
@@ -42,6 +42,6 @@ build = {
 		["table.extra"] = "src/table/extra.lua",
 	},
 	copy_directories = {
-		"tests",
+		"doc", "tests",
 	},
 }
