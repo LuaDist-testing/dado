@@ -2,11 +2,11 @@
 -- Dado is a set of facilities implemented over LuaSQL connection objects.
 -- The module's goal is to simplify the most used database operations.
 --
--- Version 1.5.2.
+-- Version 1.6.
 --
 -- @class module
 -- @name dado
--- @release $Id: dado.lua,v 1.19 2013-10-12 01:32:43 tomas Exp $
+-- @release $Id: dado.lua,v 1.20 2015/03/31 16:30:11 tomas Exp $
 --------------------------------------------------------------------------------
 
 local strformat = require"string".format
@@ -16,9 +16,9 @@ local error, pcall, require, setmetatable, tostring = error, pcall, require, set
 
 --=-----------------------------------------------------------------------------
 local _M = {
-	_COPYRIGHT = "Copyright (C) 2008-2013 PUC-Rio",
+	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
 	_DESCRIPTION = "Dado is a set of facilities implemented over LuaSQL connection objects",
-	_VERSION = "Dado 1.5.2",
+	_VERSION = "Dado 1.6",
 }
 
 --------------------------------------------------------------------------------

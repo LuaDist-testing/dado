@@ -9,7 +9,7 @@
 --
 -- @class module
 -- @name dado.object
--- @release $Id: object.lua,v 1.18 2013-10-12 01:32:52 tomas Exp $
+-- @release $Id: object.lua,v 1.19 2015/03/31 16:31:08 tomas Exp $
 ---------------------------------------------------------------------------
 
 local ipairs, pairs, rawget, rawset, setmetatable, type = ipairs, pairs, rawget, rawset, setmetatable, type
@@ -189,9 +189,9 @@ end
 
 --------------------------------------------------------------------------------
 return {
-	_COPYRIGHT = "Copyright (C) 2008-2013 PUC-Rio",
+	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
 	_DESCRIPTION = "Database Object is a library to create classes and objects associated with database tables and rows",
-	_VERSION = "Dado Object 1.5.2",
+	_VERSION = "Dado Object 1.6",
 
 	db_identification = db_identification,
 	new = new,

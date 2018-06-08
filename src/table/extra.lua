@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name table.extra
--- @release $Id: extra.lua,v 1.12 2013-10-12 01:32:56 tomas Exp $
+-- @release $Id: extra.lua,v 1.13 2015/03/31 16:31:26 tomas Exp $
 ---------------------------------------------------------------------
 
 local assert, pairs, type = assert, pairs, type
@@ -108,17 +108,17 @@ local function twostr (tab, ksep, vsep, kfilter, vfilter)
 	local i = 0
 	for key, val in pairs (tab) do
 		i = i+1
-		k[i] = kfilter and kfilter(key) or key
-		v[i] = vfilter and vfilter(val) or val
+		k[i] = kfilter and kfilter(key) or strformat("%s", key)
+		v[i] = vfilter and vfilter(val) or strformat("%s", val)
 	end
 	return tconcat (k, ksep), tconcat (v, vsep)
 end
 
 --------------------------------------------------------------------------------
 return {
-	_COPYRIGHT = "Copyright (C) 2008-2013 PUC-Rio",
+	_COPYRIGHT = "Copyright (C) 2008-2015 PUC-Rio",
 	_DESCRIPTION = "Table Extra contains some functions used to manipulate tables by other Dado modules",
-	_VERSION = "Table Extra 1.5.2",
+	_VERSION = "Table Extra 1.6",
 
 	fullconcat = fullconcat,
 	pfullconcat = pfullconcat,
