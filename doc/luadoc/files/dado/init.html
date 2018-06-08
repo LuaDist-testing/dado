@@ -112,7 +112,7 @@
 
 
 
-<p><small><b>Release:</b> $Id: init.lua,v 1.5 2008/04/20 21:27:42 tomas Exp $ </small></p>
+<p><small><b>Release:</b> $Id: init.lua,v 1.7 2009-09-29 14:14:16 tomas Exp $ </small></p>
 
 
 
@@ -521,8 +521,14 @@ Retrieves rows. Creates an iterator over the result of a query. This iterator co
 
 
 
-<h3>Return value:</h3>
-Iterator over the result set. 
+<h3>Return values:</h3>
+<ol>
+	
+	<li>Iterator over the result set.
+	
+	<li>Cursor object (to allow explicit closing). 
+	
+</ol>
 
 
 

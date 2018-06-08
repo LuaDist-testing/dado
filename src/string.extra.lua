@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name string.extra
--- @release $Id: string.extra.lua,v 1.2 2008/01/03 18:09:15 raphael Exp $
+-- @release $Id: string.extra.lua,v 1.2 2008-01-03 18:09:15 raphael Exp $
 ---------------------------------------------------------------------
 
 local check = require"check"

@@ -1,7 +1,7 @@
 ---------------------------------------------------------------------
 -- Compose SQL statements.
 --
--- @release $Id: sql.lua,v 1.5 2008/04/09 03:16:15 tomas Exp $
+-- @release $Id: sql.lua,v 1.6 2009-09-29 17:09:05 tomas Exp $
 ---------------------------------------------------------------------
 
 -- Stores all names inherited in locals
@@ -15,7 +15,7 @@ module"dado.sql"
 
 _COPYRIGHT = "Copyright (C) 2008 PUC-Rio"
 _DESCRIPTION = "SQL is a collection of functions to create SQL statements"
-_VERSION = "Dado SQL 1.0.0"
+_VERSION = "Dado SQL 1.0.1"
 
 ---------------------------------------------------------------------
 -- Quote a value to be included in an SQL statement.
@@ -31,10 +31,11 @@ function quote (s, quote, sub)
     check.optstr (quote, 2)
     check.optstr (sub, 3)
     quote = quote or "'"
+	sub = sub or "\\"
     if strfind (s, "^%(.*%)$") then
         return s
     else
-        return quote..escape (s, quote, sub)..quote
+        return quote..escape (escape (s, sub, sub), quote, sub)..quote
     end
 end
 

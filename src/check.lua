@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name check
--- @release $Id: check.lua,v 1.5 2008/04/09 03:16:15 tomas Exp $
+-- @release $Id: check.lua,v 1.5 2008-04-09 03:16:15 tomas Exp $
 ---------------------------------------------------------------------
 
 -- Stores all names inherited in locals

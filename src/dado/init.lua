@@ -2,7 +2,7 @@
 -- Dado is a set of facilities implemented over LuaSQL connection objects.
 -- This module's goal is to simplify the most used database operations.
 --
--- @release $Id: init.lua,v 1.5 2008/04/20 21:27:42 tomas Exp $
+-- @release $Id: init.lua,v 1.7 2009-09-29 14:14:16 tomas Exp $
 ---------------------------------------------------------------------
 
 -- Stores all dependencies in locals
@@ -10,7 +10,7 @@ local strformat = require"string".format
 local check     = require"check"
 local sql       = require"dado.sql"
 
-local error, require, setmetatable, tostring = error, require, setmetatable, tostring
+local error, pcall, require, setmetatable, tostring = error, pcall, require, setmetatable, tostring
 
 module"dado"
 
@@ -47,7 +47,10 @@ function connect (dbname, dbuser, dbpass, driver, ...)
 	setmetatable (obj, mt)
 	if not obj.conn then
 		-- Opening database connection
-		local luasql = require("luasql."..driver)
+		local ok, luasql = pcall (require, "luasql."..driver)
+		if not ok then
+			error ("Could not load LuaSQL driver `"..driver.."'. Maybe it is not installed properly.\nLuaSQL: "..luasql)
+		end
 		local env, err = luasql[driver] ()
 		if not env then error (err, 2) end
 		obj.conn, err = env:connect (dbname, dbuser, dbpass, ...)
@@ -166,6 +169,7 @@ end
 --	a table or the values directly).
 -- @see dado.sql.select
 -- @return Iterator over the result set.
+-- @return Cursor object (to allow explicit closing).
 ---------------------------------------------------------------------
 function select (self, columns, tabname, cond, extra, mode)
 	check.optstr (mode, 5)
@@ -177,7 +181,7 @@ function select (self, columns, tabname, cond, extra, mode)
 		local t
 		if mode then t = {} end
 		return cur:fetch (t, mode)
-	end
+	end, cur
 end
 
 ---------------------------------------------------------------------

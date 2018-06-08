@@ -2,7 +2,7 @@
 ---------------------------------------------------------------------
 -- Remove usage of module `check'.
 --
--- @release $Id: rm_check.lua,v 1.5 2007/07/20 19:51:12 tomas Exp $
+-- @release $Id: rm_check.lua,v 1.5 2007-07-20 19:51:12 tomas Exp $
 ---------------------------------------------------------------------
 
 function remove_check (file)

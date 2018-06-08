@@ -33,7 +33,8 @@ create table tabela (
 	chave integer,
 	campo1 varchar(10),
 	campo2 varchar(10),
-	data   date
+	data   date,
+	primary key (chave)
 )]]))
 
 -- Dados para o teste
@@ -45,17 +46,23 @@ dados = {
 
 -- Preenchendo a tabela
 for indice, registro in ipairs(dados) do
+	assert (false == pcall (db.insert, db, "tabela", registro))
 	registro.chave = indice
     assert (1 == db:insert ("tabela", registro))
 end
 
 -- Consulta
 local contador = 0
-for campo1, campo2 in db:select ("campo1, campo2", "tabela", "chave >= 1") do
-					contador = contador + 1
+local select_iter, cur = db:select ("campo1, campo2", "tabela", "chave >= 1")
+assert (type(select_iter) == "function")
+assert (cur, "Select didn't returned a cursor")
+assert (tostring(cur):find"ursor", "Select didn't returned a cursor object ("..tostring(cur)..")")
+for campo1, campo2 in select_iter do
+	contador = contador + 1
 	assert (campo1 == dados[contador].campo1)
 	assert (campo2 == dados[contador].campo2)
 end
+assert(cur:close())
 
 -- Teste de valores especiais para datas
 local n = #dados + 1

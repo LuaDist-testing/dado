@@ -3,7 +3,7 @@
 --
 -- @class module
 -- @name table.extra
--- @release $Id: table.extra.lua,v 1.2 2007/07/04 19:56:00 tomas Exp $
+-- @release $Id: table.extra.lua,v 1.2 2007-07-04 19:56:00 tomas Exp $
 ---------------------------------------------------------------------
 
 local ipairs, pairs = ipairs, pairs

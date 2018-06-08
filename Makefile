@@ -1,7 +1,7 @@
-# $Id: Makefile,v 1.21 2008/04/20 21:17:09 tomas Exp $
+# $Id: Makefile,v 1.22 2009-09-29 17:08:52 tomas Exp $
 
 PKG= dado
-V= 1.0
+V= 1.0.1
 DIST_DIR= $(PKG)-$V
 LUA= /usr/local/bin/lua5.1
 LUA_DIR= /usr/local/share/lua/5.1

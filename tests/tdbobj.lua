@@ -60,6 +60,13 @@ assert (rawget (p, "id") == "2")
 assert (p:signature() == "Beltrano (beltrano@cafundo.com)")
 io.write"."
 
+-- Tentando acrescentar um registro sem chave ao banco
+local p = Pessoa:new (db, { nome = "Outro", email = "outro@qualquer.com", })
+assert (pcall (p.save, p) == false)
+p.id = 3
+assert (p:save () == true)
+io.write"."
+
 -- Criando outra tabela no banco
 assert (db:assertexec ([[
 create table professor (

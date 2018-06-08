@@ -7,10 +7,10 @@
 --	table_name = string with the name of the database table
 --	key_name = string with the name of the key attribute/field
 --
--- @release $Id: object.lua,v 1.4 2008/04/09 03:16:15 tomas Exp $
+-- @release $Id: object.lua,v 1.5 2008-05-14 11:38:19 tomas Exp $
 ---------------------------------------------------------------------------
 
-local getmetatable, ipairs, pairs, rawget, rawset, setmetatable, type = getmetatable, ipairs, pairs, rawget, rawset, setmetatable, type
+local ipairs, pairs, rawget, rawset, setmetatable, type = ipairs, pairs, rawget, rawset, setmetatable, type
 local check = require"check"
 local sql = require"dado.sql"
 local sqlquote, sqlselect = sql.quote, sql.select
@@ -141,11 +141,23 @@ function new (class, dado, o)
 end
 
 ---------------------------------------------------------------------------
+-- Creates a table with the raw data of the object.
+-- @return Table with field=value pairs.
+---------------------------------------------------------------------------
+function rawdata (self)
+	local r = {}
+	for field, f in pairs (self.db_fields) do
+		r[field] = rawget (self, field)
+	end
+	return r
+end
+
+---------------------------------------------------------------------------
 -- Inserts a new record in the database.
 -- @return Boolean indicating the success of the operation.
 ---------------------------------------------------------------------------
 function insert (self)
-	return self.__dado:insert (self.table_name, self) == 1
+	return self.__dado:insert (self.table_name, self:rawdata ()) == 1
 end
 
 ---------------------------------------------------------------------------
@@ -153,7 +165,7 @@ end
 -- @return Boolean indicating the success of the operation.
 ---------------------------------------------------------------------------
 function update (self)
-	return self.__dado:update (self.table_name, self, db_identification (self)) == 1
+	return self.__dado:update (self.table_name, self:rawdata (), db_identification (self)) == 1
 end
 
 ---------------------------------------------------------------------------
